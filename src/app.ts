@@ -1,18 +1,19 @@
-import express, { Application} from "express";
+import express, { Application } from "express";
 const app: Application = express();
 import userRoutes from "./routes/user.route";
-import * as dotenv from 'dotenv'
+import blogRoutes from "./routes/blog.router";
+import * as dotenv from "dotenv";
 import { connectDB } from "./config/db";
-dotenv.config()
+dotenv.config();
 let PORT = process.env.PORT || 3003;
 
 app.use(express.json());
-connectDB()
+connectDB();
 
 app.use("/users", userRoutes);
+app.use("/blogs", blogRoutes);
 
 app.listen(PORT, () => console.log(`Server listining on ${PORT}`));
-
 
 // sync
 // async

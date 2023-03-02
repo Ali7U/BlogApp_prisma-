@@ -8,7 +8,7 @@ export const findUsers = async (req: Request, res: Response) => {
   res.json(users);
   //  users.map((user) => console.log(user));
 };
-export const createUser = async (req: Request, res: Response) => {
+export const Register = async (req: Request, res: Response) => {
   let user = await prisma.user.create({
     data: {
       username: req.body.username,
@@ -53,17 +53,17 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const Login = async (req: Request, res: Response) => {
   try {
-    const { username, password } = req.body as user;
-    let user = await prisma.user.findMany({
+    const { username, password } = req.body ;
+    let user = await prisma.user.findFirst({
       where: {
-        username: username,
-        password: password,
+        username,
+        password,
       },
     });
     if (!user) {
       return res.json({ msg: "username or password is wrong" });
     } else {
-      res.json({ msg: `welcome back ` });
+      res.json({ msg: `welcome back ${username}` });
     }
   } catch (error) {
     console.log(error);
